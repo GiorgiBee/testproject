@@ -10,6 +10,7 @@ import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import Button from '@material-ui/core/Button';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
+import IndeterminateCheckBoxIcon from '@material-ui/icons/IndeterminateCheckBox';
 import {useDispatch, useSelector} from "react-redux";
 import {AddTodos} from "./Redux/actions";
 
@@ -33,8 +34,13 @@ function App() {
     console.log(todos);
   }, [todos])
 
-  const AddTodo=() => {
-    dispatch(AddTodos(document.getElementById("outlined-basic").value))
+  const AddTodo=() => {  
+    dispatch(AddTodos( {
+      title: document.getElementById("outlined-basic").value,
+      completed: 'false'
+    }))
+   
+    
   }
   return (
     <Container maxWidth="sm">
@@ -61,8 +67,8 @@ function App() {
         <div>Todo List</div>
         {
           todos.length > 0 && (
-            todos.map(item => {
-              return <div className="todo_item"><div><Checkbox onChange={(e) => onchange(2,e.target.checked)}></Checkbox><p id="todo_text_2">{item}</p></div><Button variant="outlined" startIcon={<DeleteOutlineOutlinedIcon />}></Button></div>
+            todos.map((item,index) => {
+              return <div key={index}className="todo_item"><Checkbox onChange={(e) => onchange(2,e.target.checked)}></Checkbox><p id="todo_text_2">{item.title}</p><Button variant="outlined" startIcon={<DeleteOutlineOutlinedIcon />}></Button><IndeterminateCheckBoxIcon style={{color:"red"}}></IndeterminateCheckBoxIcon></div>
             })
           )
         }
